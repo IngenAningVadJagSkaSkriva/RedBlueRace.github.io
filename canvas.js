@@ -47,7 +47,6 @@ function RB(min, max) {
 
 x2 = RB(0, canvas.width);
 y2 = RB(0, canvas.height);
-document.title = "X" + x2 + "Y" + y2;
 
 var pos = (a) => {
     if (a < 0) {
@@ -220,7 +219,6 @@ var game = () => {
     map[y][x] = 1;
     drawing();
     setTimeout(() => {
-        document.title = "X"+speedX+"Y"+speedY;
         requestAnimationFrame(game);
     }, 1000 / canvas.height)
 }
