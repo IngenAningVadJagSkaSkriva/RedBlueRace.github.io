@@ -31,7 +31,9 @@ var red = 0;
 var blue = 0;
 var sred = 0;
 var sblue = 0;
-var speedTime = 10000;
+var speedTime = 15000;
+var rnumb = 0;
+var bnumb = 0;
 
     function RB(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -85,34 +87,39 @@ var array2D = (y, x) => {
     }
     return array;
 }
-var map = array2D(canvas.height, canvas.width);
+var map = array2D(canvas.height * 10, canvas.width * 10);
 
 var keys = [];
 onkeydown = onkeyup = (e) => {
     keys[e.keyCode] = e.type == 'keydown';
-    if(keys[39]) { // right arrow
-        if(speedX < 1) speedX += 0.1;
+    if(rnumb == 0) {
+        if(keys[39]) { // right arrow
+            if(speedX < 1) speedX += 0.1;
+        }
+        if(keys[37]) { // left arrow
+            if(speedX > -1) speedX -= 0.1;
+        }
+        if(keys[38]) { // up arrow
+            if(speedY > -1) speedY -= 0.1;
+        }
+        if(keys[40]) { // down arrow
+            if(speedY < 1) speedY += 0.1;
+        }
     }
-    if(keys[37]) { // left arrow
-        if(speedX > -1) speedX -= 0.1;
-    }
-    if(keys[38]) { // up arrow
-        if(speedY > -1) speedY -= 0.1;
-    }
-    if(keys[40]) { // down arrow
-        if(speedY < 1) speedY += 0.1;
-    }
-    if(keys[87]) { // w
-        if(speedY2 > -1) speedY2 -= 0.1;
-    }
-    if(keys[83]) { // s
-        if(speedY2 < 1) speedY2 += 0.1;
-    }
-    if(keys[68]) { // d
-        if(speedX2 < 1) speedX2 += 0.1;
-    }
-    if(keys[65]) { // a
-        if(speedX2 > -1) speedX2 -= 0.1;
+
+    if(bnumb == 0) {
+        if(keys[87]) { // w
+            if(speedY2 > -1) speedY2 -= 0.1;
+        }
+        if(keys[83]) { // s
+            if(speedY2 < 1) speedY2 += 0.1;
+        }
+        if(keys[68]) { // d
+            if(speedX2 < 1) speedX2 += 0.1;
+        }
+        if(keys[65]) { // a
+            if(speedX2 > -1) speedX2 -= 0.1;
+        }
     }
 }
 
@@ -149,6 +156,42 @@ var drawing = () => {
         }
     }
 
+}
+
+var reset = () => {
+    red = 0;
+    blue = 0;
+    x = Math.round(canvas.width / 10) * 9;
+    y = Math.round(canvas.height / 10) * 9;
+    xA = x;
+    yA = y;
+    speedX = 0;
+    speedY = 0;
+    x2 = canvas.width / 10;
+    y2 = canvas.height / 10;
+    xA2 = x2;
+    yA2 = y2;
+    speedX2 = 0;
+    speedY2 = 0;
+    sblue = 0;
+    sred = 0;
+    for(let i = 0; i < canvas.height; i++) {
+        for(let j = 0; j < canvas.width; j++) {
+            map[i][j] = 0;
+        }
+    }
+    game();
+    drawing();
+}
+
+redwin = () => {
+    alert("RED WINS!");
+    reset();
+}
+
+bluewin = () => {
+    alert("BLUE WINS!");
+    reset();
 }
 
 
@@ -241,7 +284,7 @@ var game = () => {
     for(let i = 0; i < 10; i++) {
         for(let j = 0; j < 10; j++) {
             map[i + fruitY][j + fruitX] = 4;
-            if(i < 5 && j < 5) map[i + sfruitY][j + sfruitX] = 6;
+            if(i < 5 && j < 5 && sfruitY < canvas.height) map[i + sfruitY][j + sfruitX] = 6;
         }
     }
     if(map[y][x] == 4) {
@@ -256,6 +299,10 @@ var game = () => {
         if(division2 < 1.5) {
             division2 += 0.05;
         }
+        if(red >= 30) {
+            redwin();
+            return 0;
+        }
     } else if(map[y2][x2] == 4) {
         blue++;
         for(let i = 0; i < 10; i++) {
@@ -268,6 +315,10 @@ var game = () => {
         if(division2 > 0.5) {
             division2 -= 0.05;
         }
+        if(blue >= 30) {
+            bluewin();
+            return 0;
+        }
     }
     if(map[y][x] == 6) {
         for(let i = 0; i < 10; i++) {
@@ -275,8 +326,12 @@ var game = () => {
                 map[i + sfruitY][j + sfruitX] = null;
             }
         }
-        sfruitX = RB(0,canvas.width - 10);
-        sfruitY = RB(0,canvas.height - 10);
+        sfruitX = canvas.width * 2;
+        sfruitY = canvas.height * 2;
+        setTimeout(() => {
+            sfruitX = RB(0,canvas.width - 10);
+            sfruitY = RB(0,canvas.height - 10);
+        },30000);
         if(sred != 1) setTimeout(() => {
             sred = 0;
         }, speedTime);
@@ -288,13 +343,36 @@ var game = () => {
                 map[i + sfruitY][j + sfruitX] = null;
             }
         }
-        sfruitX = RB(0,canvas.width - 10);
-        sfruitY = RB(0,canvas.height - 10);
+        sfruitX = canvas.width * 2;
+        sfruitY = canvas.height * 2;
+        setTimeout(() => {
+            sfruitX = RB(0,canvas.width - 10);
+            sfruitY = RB(0,canvas.height - 10);
+        },30000);
         if(sblue != 1) setTimeout(() => {
             sblue = 0;
         }, speedTime);
         sblue = 1;
 
+    }
+    if(map[y][x] == 5) {
+        if(bnumb == 0) {
+            speedX2 = 0 - speedX2 * 2;
+        speedY2 = 0 - speedY2 * 2;
+        bnumb = 1;
+        setTimeout(() => {
+            bnumb = 0;
+        }, 3000);
+        }
+    } else if(map[y2][x2] == 3) {
+        if(rnumb == 0) {
+            speedX = 0 - speedX * 2;
+        speedY = 0 - speedY * 2;
+        rnumb = 1;
+        setTimeout(() => {
+            rnumb = 0;
+        }, 3000);
+        }
     }
     map[yt[fatcount]][xt[fatcount]] = null;
     map[yt2[fatcount2]][xt2[fatcount2]] = null;
@@ -311,7 +389,8 @@ game();
 drawing();
 //slowdown
 setInterval(() => {
-    if(speedX < 0.1 && speedX > -0.1) speedX = 0;
+    if(rnumb == 0) {
+        if(speedX < 0.1 && speedX > -0.1) speedX = 0;
     if(speedY < 0.1 && speedY > -0.1) speedY = 0;
     if(speedX > 0) {
         speedX -= 0.05;
@@ -321,7 +400,9 @@ setInterval(() => {
     } else if(speedY < 0) {
         speedY += 0.05;
     }
-    if(speedX2 < 0.1 && speedX2 > -0.1) speedX2 = 0;
+    }
+    if(bnumb == 0) {
+        if(speedX2 < 0.1 && speedX2 > -0.1) speedX2 = 0;
     if(speedY2 < 0.1 && speedY2 > -0.1) speedY2 = 0;
     if(speedX2 > 0) {
         speedX2 -= 0.05;
@@ -330,5 +411,6 @@ setInterval(() => {
         speedY2 -= 0.05;
     } else if(speedY2 < 0) {
         speedY2 += 0.05;
+    }
     }
 },100);
