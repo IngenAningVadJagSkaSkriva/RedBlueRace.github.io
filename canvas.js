@@ -136,10 +136,10 @@ var game = () => {
     if(x >= canvas.width - 2 || x <= 2) {
         speedX = 0 - speedX;
         if(x > canvas.width) {
-            x = canvas.width - 2;
+            x = canvas.width - 4;
             xA = x;
         } else if(x < 2) {
-            x = 2;
+            x = 4;
             xA = x;
 
         }
@@ -148,10 +148,10 @@ var game = () => {
     if(y >= canvas.height - 2 || y <= 2) {
         speedY = 0 - speedY;
         if(y > canvas.height - 2) {
-            y = canvas.height - 2;
+            y = canvas.height - 4;
             yA = y;
         } else if(y < 2) {
-            y = 2;
+            y = 4;
             yA = y;
         }
     }
