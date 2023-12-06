@@ -133,21 +133,26 @@ var drawing = () => {
 
 //game
 var game = () => {
-    if(x >= canvas.width || x <= 0) {
+    if(x >= canvas.width - 2 || x <= 2) {
         speedX = 0 - speedX;
         if(x > canvas.width) {
-            x = canvas.width - 1;
-        } else if(x < 0) {
-            x = 1;
+            x = canvas.width - 2;
+            xA = x;
+        } else if(x < 2) {
+            x = 2;
+            xA = x;
+
         }
 
     }
-    if(y >= canvas.height - 1 || y <= 1) {
+    if(y >= canvas.height - 2 || y <= 2) {
         speedY = 0 - speedY;
-        if(y > canvas.height) {
-            y = canvas.height - 1;
-        } else if(y < 0) {
-            y = 1;
+        if(y > canvas.height - 2) {
+            y = canvas.height - 2;
+            yA = y;
+        } else if(y < 2) {
+            y = 2;
+            yA = y;
         }
     }
     for(let i = fatcount + 1; i > -1; i--) {
