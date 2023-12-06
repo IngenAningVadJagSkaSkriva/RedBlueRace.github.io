@@ -81,32 +81,22 @@ var array2D = (y, x) => {
 }
 var map = array2D(canvas.height, canvas.width);
 
-window.addEventListener("keydown", function (event) {
-    if (event.defaultPrevented) {
-        return;
+var keys = [];
+onkeydown = onkeyup = (e) => {
+    keys[e.keyCode] = e.type == 'keydown';
+    if(keys[39]) { // right arrow
+        if(speedX < 1) speedX += 0.1;
     }
-    switch (event.key) {
-        case "ArrowDown":
-            if (speedY < 1) speedY += 0.1;
-            break;
-        case "ArrowUp":
-            if (speedY > -1) speedY -= 0.1;
-            break;
-        case "ArrowLeft":
-            if (speedX > -1) speedX -= 0.1;
-            break;
-        case "ArrowRight":
-            if (speedX < 1) speedX += 0.1;
-            break;
-        case "e":
-            alert(xt);
-            alert(yt);
-            break;
-        default:
-            return;
+    if(keys[37]) { // left arrow
+        if(speedX > -1) speedX -= 0.1;
     }
-    event.preventDefault();
-}, true);
+    if(keys[38]) { // up arrow
+        if(speedY > -1) speedY -= 0.1;
+    }
+    if(keys[40]) { // down arrow
+        if(speedY < 1) speedY += 0.1;
+    }
+}
 
 window.addEventListener('resize', () => {
     drawing();
