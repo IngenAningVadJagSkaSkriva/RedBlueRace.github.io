@@ -31,7 +31,7 @@ var red = 0;
 var blue = 0;
 var sred = 0;
 var sblue = 0;
-var speedTime = 15000;
+var speedTime = 10000;
 
     function RB(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -195,7 +195,7 @@ var game = () => {
             yA2 = y2;
         } else if(y2 < 2) {
             y2 = 4;
-            yA2 = y;
+            yA2 = y2;
         }
     }
     for(let i = fatcount + 1; i > -1; i--) {
