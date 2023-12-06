@@ -190,6 +190,9 @@ var game = () => {
         }
         fruitX = RB(0,canvas.width - 10);
         fruitY = RB(0,canvas.height - 10);
+        if(division2 < 1.5) {
+            division2 += 0.05;
+        }
     } else if(map[y2][x2] == 4) {
         blue++;
         for(let i = 0; i < 10; i++) {
@@ -199,7 +202,9 @@ var game = () => {
         }
         fruitX = RB(0,canvas.width - 10);
         fruitY = RB(0,canvas.height - 10);
-        if(division2 > 0.5) division2 -= 0.05;
+        if(division2 > 0.5) {
+            division2 -= 0.05;
+        }
     }    
     map[yt[fatcount]][xt[fatcount]] = null;
     map[yt2[fatcount2]][xt2[fatcount2]] = null;
