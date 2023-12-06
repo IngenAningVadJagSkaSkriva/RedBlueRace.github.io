@@ -29,10 +29,16 @@ var fatcount2 = 20;
 var division2 = 1.5;
 var red = 0;
 var blue = 0;
+var sred = 0;
+var sblue = 0;
+var speedTime = 15000;
 
     function RB(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
+
+    var sfruitX = RB(0,canvas.width);
+    var sfruitY = RB(0,canvas.height);
 
 for(let i = 0; i < (canvas.height * canvas.width); i++) {
     xt[i] = 0;
@@ -136,6 +142,9 @@ var drawing = () => {
             } else if(map[i][j] == 5) {
                 ctx.fillStyle = "blue";
                 ctx.fillRect(j,i,1,1);
+            } else if(map[i][j] == 6) {
+                ctx.fillStyle = "yellow";
+                ctx.fillRect(j,i,1,1);
             }
         }
     }
@@ -205,10 +214,26 @@ var game = () => {
     oy = y;
     ox2 = x2;
     oy2 = y2;
+    if(sred == 1) {
+        speedX *= 2;
+        speedY *= 2;
+    }
     xA += speedX;
     yA += speedY;
+    if(sred == 1) {
+        speedX /= 2;
+        speedY /= 2;
+    }
+    if(sblue == 1) {
+        speedX2 *= 2;
+        speedY2 *= 2;
+    }
     xA2 += speedX2;
     yA2 += speedY2;
+    if(sblue == 1) {
+        speedX2 /= 2;
+        speedY2 /= 2;
+    }
     x2 = Math.floor(xA2);
     y2 = Math.floor(yA2);
     x = Math.floor(xA);
@@ -216,6 +241,7 @@ var game = () => {
     for(let i = 0; i < 10; i++) {
         for(let j = 0; j < 10; j++) {
             map[i + fruitY][j + fruitX] = 4;
+            if(i < 5 && j < 5) map[i + sfruitY][j + sfruitX] = 6;
         }
     }
     if(map[y][x] == 4) {
@@ -242,7 +268,34 @@ var game = () => {
         if(division2 > 0.5) {
             division2 -= 0.05;
         }
-    }    
+    }
+    if(map[y][x] == 6) {
+        for(let i = 0; i < 10; i++) {
+            for(let j = 0; j < 10; j++) {
+                map[i + sfruitY][j + sfruitX] = null;
+            }
+        }
+        sfruitX = RB(0,canvas.width - 10);
+        sfruitY = RB(0,canvas.height - 10);
+        if(sred != 1) setTimeout(() => {
+            sred = 0;
+        }, speedTime);
+        sred = 1;
+
+    } else if(map[y2][x2] == 6) {
+        for(let i = 0; i < 10; i++) {
+            for(let j = 0; j < 10; j++) {
+                map[i + sfruitY][j + sfruitX] = null;
+            }
+        }
+        sfruitX = RB(0,canvas.width - 10);
+        sfruitY = RB(0,canvas.height - 10);
+        if(sblue != 1) setTimeout(() => {
+            sblue = 0;
+        }, speedTime);
+        sblue = 1;
+
+    }
     map[yt[fatcount]][xt[fatcount]] = null;
     map[yt2[fatcount2]][xt2[fatcount2]] = null;
     map[oy][ox] = 3;
