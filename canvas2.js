@@ -356,7 +356,7 @@ var game = () => {
 
     }
     if(map[y][x] == 5) {
-        if(bnumb == 0) {
+        if(bnumb == 0 && rnumb == 0) {
             speedX2 = 0 - speedX2 * 2;
         speedY2 = 0 - speedY2 * 2;
         bnumb = 1;
@@ -365,7 +365,7 @@ var game = () => {
         }, 3000);
         }
     } else if(map[y2][x2] == 3) {
-        if(rnumb == 0) {
+        if(rnumb == 0 && bnumb == 0) {
             speedX = 0 - speedX * 2;
         speedY = 0 - speedY * 2;
         rnumb = 1;
