@@ -36,15 +36,19 @@ var rnumb = 0;
 var bnumb = 0;
 var rangle = 0;
 var bangle = 0;
+var coin = new Audio("coin.mp3");
+var spring = new Audio("spring.mp3");
+var goofy = new Audio("goofy.mp3");
+var fast = new Audio("fast.mp3");
 
     function RB(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-    var sfruitX = RB(0,canvas.width);
-    var sfruitY = RB(0,canvas.height);
-    var wfruitX = RB(0,canvas.width);
-    var wfruitY = RB(0,canvas.height);
+    var sfruitX = RB(0,canvas.width - 10);
+    var sfruitY = RB(0,canvas.height - 10);
+    var wfruitX = RB(0,canvas.width - 10);
+    var wfruitY = RB(0,canvas.height - 10);
 
 for(let i = 0; i < (canvas.height * canvas.width); i++) {
     xt[i] = 0;
@@ -52,13 +56,6 @@ for(let i = 0; i < (canvas.height * canvas.width); i++) {
     xt2[i] = 0;
     yt2[i] = 0;
 }
-
-function RB(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
-x2 = RB(0, canvas.width);
-y2 = RB(0, canvas.height);
 
 var pos = (a) => {
     if (a < 0) {
@@ -141,21 +138,26 @@ var drawing = () => {
             if (map[i][j] == 1) {
                 ctx.fillStyle = "white";
                 ctx.fillRect(j, i, 1, 1);
+                map[i][j] = null;
             } else if (map[i][j] == 2) {
                 ctx.fillStyle = "yellow";
                 ctx.fillRect(j, i, 1, 1);
+                map[i][j] = null;
             } else if (map[i][j] == 3) {
                 ctx.fillStyle = "red";
+                if(sred == 1 && RB(1,2) == 1) ctx.fillStyle = "pink";
                 ctx.fillRect(j, i, 1, 1);
             } else if(map[i][j] == 4) {
                 ctx.fillStyle = "brown";
                 ctx.fillRect(j,i,1,1);
             } else if(map[i][j] == 5) {
                 ctx.fillStyle = "blue";
+                if(sblue == 1 && RB(1,2) == 1) ctx.fillStyle = "aqua";
                 ctx.fillRect(j,i,1,1);
             } else if(map[i][j] == 6) {
                 ctx.fillStyle = "yellow";
                 ctx.fillRect(j,i,1,1);
+                map[i][j] = null;
             } else if(map[i][j] == 7) {
                 if(RB(1,3) == 1) {
                     ctx.fillStyle = "blue";
@@ -326,6 +328,7 @@ var game = () => {
             redwin();
             return 0;
         }
+        coin.play();
     } else if(map[y2][x2] == 4) {
         blue++;
         for(let i = 0; i < 10; i++) {
@@ -342,6 +345,7 @@ var game = () => {
             bluewin();
             return 0;
         }
+        coin.play();
     }
     if(map[y][x] == 6) {
         for(let i = 0; i < 10; i++) {
@@ -359,6 +363,7 @@ var game = () => {
             sred = 0;
         }, speedTime);
         sred = 1;
+        fast.play();
 
     } else if(map[y2][x2] == 6) {
         for(let i = 0; i < 10; i++) {
@@ -376,6 +381,7 @@ var game = () => {
             sblue = 0;
         }, speedTime);
         sblue = 1;
+        fast.play();
 
     }
     if(map[y][x] == 5) {
@@ -387,6 +393,11 @@ var game = () => {
             bnumb = 0;
         }, 3000);
         }
+        if(RB(1,2) == 1) {
+            goofy.play();
+        } else if(RB(1,2) == 2) {
+            spring.play();
+        }
     } else if(map[y2][x2] == 3) {
         if(rnumb == 0 && bnumb == 0) {
             speedX = 0 - speedX * 2;
@@ -395,6 +406,11 @@ var game = () => {
         setTimeout(() => {
             rnumb = 0;
         }, 3000);
+        }
+        if(RB(1,2) == 1) {
+            goofy.play();
+        } else if(RB(1,2) == 2) {
+            spring.play();
         }
     }
     if(map[y][x] == 7) {
@@ -424,6 +440,7 @@ var game = () => {
             sfruitY = RB(0,canvas.height - 10);
         }, 30000);
         }
+        fast.play();
     } else if(map[y2][x2] == 7) {
         if(rangle == 0 && bangle == 0) {
             bangle = 1;
@@ -451,6 +468,7 @@ var game = () => {
             sfruitY = RB(0,canvas.height - 10);
         }, 30000);
         }
+        fast.play();
     }
     map[yt[fatcount]][xt[fatcount]] = null;
     map[yt2[fatcount2]][xt2[fatcount2]] = null;
