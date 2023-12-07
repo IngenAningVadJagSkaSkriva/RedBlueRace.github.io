@@ -432,8 +432,8 @@ var game = () => {
         }, 5000);
         for(let i = 0; i < 5; i++) {
             for(let j = 0; j < 5; j++) {
-                map[i + wfruitY][j + wfruitX - 10] = null;
-                map[i + sfruitY][j + sfruitX - 10] = null;
+                map[i + wfruitY][j + wfruitX] = null;
+                map[i + sfruitY][j + sfruitX] = null;
             }
         }
         sfruitY = canvas.height * 2;
@@ -449,7 +449,7 @@ var game = () => {
             sred = 0;
             sfruitX = RB(0,canvas.width - 10);
             sfruitY = RB(0,canvas.height - 10);
-        },30000);
+        }, 30000);
         }
     }
     map[yt[fatcount]][xt[fatcount]] = null;
