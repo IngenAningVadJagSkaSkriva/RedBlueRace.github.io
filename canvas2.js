@@ -79,9 +79,9 @@ var test = (x, y, x2, y2, XorY) => {
 
 var array2D = (y, x) => {
     var array = [];
-    for (let i = 0; i < y; i++) {
+    for (let i = 0 - y / 10; i < y; i++) {
         array[i] = [];
-        for (let j = 0; j < x; j++) {
+        for (let j = 0 - x / 10; j < x; j++) {
             array[i][j] = null;
         }
     }
