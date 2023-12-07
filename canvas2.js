@@ -34,6 +34,8 @@ var sblue = 0;
 var speedTime = 15000;
 var rnumb = 0;
 var bnumb = 0;
+var rangle = 0;
+var bangle = 0;
 
     function RB(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -41,6 +43,8 @@ var bnumb = 0;
 
     var sfruitX = RB(0,canvas.width);
     var sfruitY = RB(0,canvas.height);
+    var wfruitX = RB(0,canvas.width);
+    var wfruitY = RB(0,canvas.height);
 
 for(let i = 0; i < (canvas.height * canvas.width); i++) {
     xt[i] = 0;
@@ -152,6 +156,9 @@ var drawing = () => {
             } else if(map[i][j] == 6) {
                 ctx.fillStyle = "yellow";
                 ctx.fillRect(j,i,1,1);
+            } else if(map[i][j] == 7) {
+                ctx.fillStyle = "white";
+                ctx.fillRect(j,i,1,1);
             }
         }
     }
@@ -257,6 +264,13 @@ var game = () => {
     oy = y;
     ox2 = x2;
     oy2 = y2;
+    if(rangle == 1) {
+        speedX = test(x,y,fruitX + 5,fruitY + 5,"X") * 4.5;
+        speedY = test(x,y,fruitX + 5,fruitY + 5,"Y") * 4.5;
+    } else if(bangle == 1) {
+        speedX2 = test(x2,y2,fruitX + 5,fruitY + 5,"X") * 4.5;
+        speedY2 = test(x2,y2,fruitX + 5,fruitY + 5,"Y") * 4.5;
+    }
     if(sred == 1) {
         speedX *= 2;
         speedY *= 2;
@@ -284,7 +298,10 @@ var game = () => {
     for(let i = 0; i < 10; i++) {
         for(let j = 0; j < 10; j++) {
             map[i + fruitY][j + fruitX] = 4;
-            if(i < 5 && j < 5 && sfruitY < canvas.height) map[i + sfruitY][j + sfruitX] = 6;
+            if(i < 5 && j < 5 && sfruitY < canvas.height) {
+                map[i + sfruitY][j + sfruitX] = 6;
+                map[i + wfruitY][j + wfruitX] = 7;
+            }
         }
     }
     if(map[y][x] == 4) {
@@ -372,6 +389,61 @@ var game = () => {
         setTimeout(() => {
             rnumb = 0;
         }, 3000);
+        }
+    }
+    if(map[y][x] == 7) {
+        if(rangle == 0 && bangle == 0) {
+            rangle = 1;
+        setTimeout(() => {
+            rangle = 0;
+        }, 5000);
+        for(let i = 0; i < 5; i++) {
+            for(let j = 0; j < 5; j++) {
+                map[i + wfruitY][j + wfruitX] = null;
+                map[i + sfruitY][j + sfruitX] = null;
+            }
+        }
+        sfruitY = canvas.height * 2;
+        sfruitX = canvas.width * 2;
+        wfruitY = canvas.height * 2;
+        wfruitX = canvas.width * 2;
+        setTimeout(() => {
+            wfruitX = RB(0,canvas.width - 10);
+            wfruitY = RB(0,canvas.height - 10);
+        },60000);
+        sblue = 1;
+        setTimeout(() => {
+            sblue = 0;
+            sfruitX = RB(0,canvas.width - 10);
+            sfruitY = RB(0,canvas.height - 10);
+        }, 30000);
+        }
+    } else if(map[y2][x2] == 7) {
+        if(rangle == 0 && bangle == 0) {
+            bangle = 1;
+        setTimeout(() => {
+            bangle = 0;   
+        }, 5000);
+        for(let i = 0; i < 5; i++) {
+            for(let j = 0; j < 5; j++) {
+                map[i + wfruitY][j + wfruitX - 10] = null;
+                map[i + sfruitY][j + sfruitX - 10] = null;
+            }
+        }
+        sfruitY = canvas.height * 2;
+        sfruitX = canvas.width * 2;
+        wfruitY = canvas.height * 2;
+        wfruitX = canvas.width * 2;
+        setTimeout(() => {
+            wfruitX = RB(0,canvas.width - 10);
+            wfruitY = RB(0,canvas.height - 10);
+        },60000);
+        sred = 1;
+        setTimeout(() => {
+            sred = 0;
+            sfruitX = RB(0,canvas.width - 10);
+            sfruitY = RB(0,canvas.height - 10);
+        },30000);
         }
     }
     map[yt[fatcount]][xt[fatcount]] = null;
