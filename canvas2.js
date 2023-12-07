@@ -157,7 +157,13 @@ var drawing = () => {
                 ctx.fillStyle = "yellow";
                 ctx.fillRect(j,i,1,1);
             } else if(map[i][j] == 7) {
-                ctx.fillStyle = "white";
+                if(RB(1,3) == 1) {
+                    ctx.fillStyle = "blue";
+                } else if(RB(1,3) == 2) {
+                    ctx.fillStyle = "red";
+                } else if(RB(1,3) == 3) {
+                    ctx.fillStyle = "yellow";
+                }
                 ctx.fillRect(j,i,1,1);
             }
         }
