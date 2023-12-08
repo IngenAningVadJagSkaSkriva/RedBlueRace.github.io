@@ -106,6 +106,7 @@ onkeydown = onkeyup = (e) => {
     }
     if(keys[32]) { //space
         s();
+        keys[32] = 0;
     }
 }
 
