@@ -195,6 +195,8 @@ var reset = () => {
             map[i][j] = 0;
         }
     }
+    fatcount = 20;
+    fatcount2 = 20;
     game();
     drawing();
 }
@@ -314,6 +316,7 @@ var game = () => {
     }
     if(map[y][x] == 4) {
         red++;
+        fatcount++;
         for(let i = 0; i < 10; i++) {
             for(let j = 0; j < 10; j++) {
                 map[i + fruitY][j + fruitX] = null;
@@ -331,6 +334,7 @@ var game = () => {
         coin.play();
     } else if(map[y2][x2] == 4) {
         blue++;
+        fatcount2++;
         for(let i = 0; i < 10; i++) {
             for(let j = 0; j < 10; j++) {
                 map[i + fruitY][j + fruitX] = null;
