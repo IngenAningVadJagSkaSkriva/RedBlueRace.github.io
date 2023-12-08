@@ -157,14 +157,16 @@ var drawing = () => {
                 map[i][j] = null;
             } else if (map[i][j] == 3) {
                 ctx.fillStyle = "red";
-                if(sred == 1 && RB(1,2) == 1) ctx.fillStyle = "pink";
+                if((sred == 1 || rangle == 1) && RB(1,2) == 1) ctx.fillStyle = "pink";
+                if(rnumb == 1) ctx.fillStyle = "DarkRed";
                 ctx.fillRect(j, i, 1, 1);
             } else if(map[i][j] == 4) {
                 ctx.fillStyle = "brown";
                 ctx.fillRect(j,i,1,1);
             } else if(map[i][j] == 5) {
                 ctx.fillStyle = "blue";
-                if(sblue == 1 && RB(1,2) == 1) ctx.fillStyle = "aqua";
+                if((sblue == 1 || bangle == 1) && RB(1,2) == 1) ctx.fillStyle = "aqua";
+                if(bnumb == 1) ctx.fillStyle = "DarkBlue";
                 ctx.fillRect(j,i,1,1);
             } else if(map[i][j] == 6) {
                 ctx.fillStyle = "yellow";
