@@ -1,3 +1,11 @@
+var s = () => {
+    if(confirm("DO YOU WANT TO PLAY 2 PLAYER MODE?")) {
+        location.href = "2playermode.html";
+    }
+}
+s();
+alert("PRESS SPACE TO SWITCH BETWEEN SINGLE AND TWO PLAYER MODE!");
+
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext('2d');
 canvas.height = 200;
@@ -96,6 +104,9 @@ onkeydown = onkeyup = (e) => {
     if(keys[40]) { // down arrow
         if(speedY < 1) speedY += 0.1;
     }
+    if(keys[32]) { //space
+        s();
+    }
 }
 
 window.addEventListener('resize', () => {
@@ -123,6 +134,9 @@ var drawing = () => {
                 ctx.fillRect(j,i,1,1);
             } else if(map[i][j] == 5) {
                 ctx.fillStyle = "blue";
+                ctx.fillRect(j,i,1,1);
+            } else if(map[i][j] == 6) {
+                ctx.fillStyle = "yellow";
                 ctx.fillRect(j,i,1,1);
             }
         }
