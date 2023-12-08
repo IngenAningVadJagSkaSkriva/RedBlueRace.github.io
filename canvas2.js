@@ -1,3 +1,11 @@
+var s = () => {
+    if(confirm("DO YOU WANT TO PLAY SINGLE MODE?")) {
+        location.href = "index.html";
+    }
+}
+s();
+alert("PRESS SPACE TO SWITCH BETWEEN SINGLE AND TWO PLAYER MODE!");
+
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext('2d');
 canvas.height = 200;
@@ -121,6 +129,9 @@ onkeydown = onkeyup = (e) => {
         if(keys[65]) { // a
             if(speedX2 > -1) speedX2 -= 0.1;
         }
+    }
+    if(keys[32]) { //space
+        s();
     }
 }
 
