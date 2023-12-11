@@ -1,9 +1,17 @@
+var single = 1;
+
 var s = () => {
-    if(confirm("DO YOU WANT TO PLAY SINGLE MODE?")) {
-        location.href = "index.html";
-    }
+   if(single == 1) {
+    if(confirm("DO YOU WANT TO PLAY 2 PLAYER MODE?")) {
+        single = 0;
+    } 
+    } else if(single == 0) {
+        if(confirm("DO YOU WANT TO PLAY SINGLE MODE?")) {
+            single = 1;
+        }
+   }
+   reset();
 }
-s();
 alert("PRESS SPACE TO SWITCH BETWEEN SINGLE AND TWO PLAYER MODE!");
 
 const canvas = document.getElementById("canvas1");
@@ -116,7 +124,7 @@ onkeydown = onkeyup = (e) => {
         }
     }
 
-    if(bnumb == 0) {
+    if(bnumb == 0 && single == 0) {
         if(keys[87]) { // w
             if(speedY2 > -1) speedY2 -= 0.1;
         }
@@ -129,6 +137,8 @@ onkeydown = onkeyup = (e) => {
         if(keys[65]) { // a
             if(speedX2 > -1) speedX2 -= 0.1;
         }
+    } else if(single == 1 && bnumb == 0) {
+        //computer();
     }
     if(keys[32]) { //space
         s();
@@ -305,6 +315,10 @@ var game = () => {
         speedX /= 2;
         speedY /= 2;
     }
+    if(single == 1) {
+        speedX2 *= 1.5;
+        speedY2 *= 1.5;
+    }
     if(sblue == 1) {
         speedX2 *= 2;
         speedY2 *= 2;
@@ -314,6 +328,10 @@ var game = () => {
     if(sblue == 1) {
         speedX2 /= 2;
         speedY2 /= 2;
+    }
+    if(single == 1) {
+        speedX2 /= 1.5;
+        speedY2 /= 1.5;
     }
     x2 = Math.floor(xA2);
     y2 = Math.floor(yA2);
@@ -364,6 +382,9 @@ var game = () => {
             return 0;
         }
         coin.play();
+        if(single == 1) {
+            computer();
+        }
     }
     if(map[y][x] == 6) {
         for(let i = 0; i < 10; i++) {
@@ -497,10 +518,37 @@ var game = () => {
     drawing();
     setTimeout(() => {
         requestAnimationFrame(game);
-    }, 1000 / canvas.height)
+    }, 1000 / canvas.height);
 }
 game();
 drawing();
+
+var computer = () => {
+    if(bnumb == 0) {
+        let posX = test(x2,y2,(fruitX + 5),(fruitY + 5),"X");
+        let posY = test(x2,y2,(fruitX + 5),(fruitY + 5),"Y");
+        let cspeedX = 0.05;
+        let cspeedY = 0.05;
+    if(speedX2 > posX) {
+        speedX2 -= cspeedX;
+    } else if(speedX2 < posX) speedX2 += cspeedX;
+    if(speedY2 > posY) {
+        speedY2 -= cspeedY;
+    } else if(speedY2 < posY) {
+        speedY2 += cspeedY;
+    }
+    }
+    if(speedX2 > 1) {
+        speedX2 = 1;
+    } else if(speedX2 < -1) {
+        speedX2 = -1;
+    }
+    if(speedY2 > 1) {
+        speedY2 = 1;
+    } else if(speedY2 < -1) {
+        speedY2 = -1;
+    }
+}
 //slowdown
 setInterval(() => {
     if(rnumb == 0) {
@@ -515,16 +563,20 @@ setInterval(() => {
         speedY += 0.05;
     }
     }
-    if(bnumb == 0) {
-        if(speedX2 < 0.1 && speedX2 > -0.1) speedX2 = 0;
-    if(speedY2 < 0.1 && speedY2 > -0.1) speedY2 = 0;
-    if(speedX2 > 0) {
-        speedX2 -= 0.05;
-    } else if(speedX2 < 0) speedX2 += 0.05;
-    if(speedY2 > 0) {
-        speedY2 -= 0.05;
-    } else if(speedY2 < 0) {
-        speedY2 += 0.05;
-    }
+    if(single == 0) {
+        if(bnumb == 0) {
+            if(speedX2 < 0.1 && speedX2 > -0.1) speedX2 = 0;
+        if(speedY2 < 0.1 && speedY2 > -0.1) speedY2 = 0;
+        if(speedX2 > 0) {
+            speedX2 -= 0.05;
+        } else if(speedX2 < 0) speedX2 += 0.05;
+        if(speedY2 > 0) {
+            speedY2 -= 0.05;
+        } else if(speedY2 < 0) {
+            speedY2 += 0.05;
+        }
+        }
+    } else if(single == 1) {
+        computer();
     }
 },100);
