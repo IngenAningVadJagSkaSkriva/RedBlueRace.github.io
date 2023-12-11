@@ -4,13 +4,14 @@ var s = () => {
    if(single == 1) {
     if(confirm("DO YOU WANT TO PLAY 2 PLAYER MODE?")) {
         single = 0;
+        ronce = 1;
     } 
     } else if(single == 0) {
         if(confirm("DO YOU WANT TO PLAY SINGLE MODE?")) {
             single = 1;
+            ronce = 1;
         }
    }
-   reset();
 }
 alert("PRESS SPACE TO SWITCH BETWEEN SINGLE AND TWO PLAYER MODE!");
 
@@ -56,6 +57,7 @@ var coin = new Audio("coin.mp3");
 var spring = new Audio("spring.mp3");
 var goofy = new Audio("goofy.mp3");
 var fast = new Audio("fast.mp3");
+var ronce = 0;
 
     function RB(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
@@ -238,6 +240,11 @@ bluewin = () => {
 
 //game
 var game = () => {
+    if(ronce == 1) {
+        ronce = 0;
+        reset();
+        return 0;
+    }
     if(x >= canvas.width - 2 || x <= 2) {
         speedX = 0 - speedX;
         if(x > canvas.width) {
