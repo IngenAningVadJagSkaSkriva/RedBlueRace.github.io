@@ -12,6 +12,9 @@ var s = () => {
             ronce = 1;
         }
    }
+   for(let i = 0; i < 100; i++) {
+    keys[i] = null;
+   }
 }
 alert("PRESS SPACE TO SWITCH BETWEEN SINGLE AND TWO PLAYER MODE!");
 
@@ -223,6 +226,9 @@ var reset = () => {
     }
     fatcount = 20;
     fatcount2 = 20;
+    for(let i = 0; i < 100; i++) {
+        keys[i] = null;
+    }
     game();
     drawing();
 }
